@@ -1,4 +1,4 @@
 emdee
 part.test
-src/.object
-src/.depend
+src/.object/*.o
+src/.depend/*.d
