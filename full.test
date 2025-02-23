@@ -1,0 +1,155 @@
+# Tests on code span
+327 | `hi`lo` | <code>hi</code>lo`
+328 | `foo` | <code>foo</code>
+329 | `` foo ` bar `` | <code>foo ` bar</code>
+330 | ` `` ` | <code>``</code>
+331 | `  ``  ` | <code> `` </code>
+332 | ` a` | <code> a</code>
+333' | `\tb\t` | <code>\tb\t</code>
+334' | ` ` `  ` | <code> </code> <code>  </code>
+337' | `foo   bar` | <code>foo   bar</code>
+338 | `foo\`bar` | <code>foo\</code>bar`
+339 | ``foo`bar`` | <code>foo`bar</code>
+340 | ` foo `` bar ` | <code>foo `` bar</code>
+341 | *foo`*` | *foo<code>*</code>
+347 | ```foo`` | ```foo``
+348 | `foo | `foo
+349 | `foo``bar`` | `foo<code>bar</code>
+
+# Tests on emphasis
+# Rule 1
+350 | *foo bar* | <em>foo bar</em>
+351 | a * foo bar* | a * foo bar*
+352 | a*"foo"* | a*"foo"*
+353 | * a * | * a *
+354 | *$*alpha. | *$*alpha.
+355 | foo*bar* | foo<em>bar</em>
+
+# Rule 2
+357 | _foo bar_ | <em>foo bar</em>
+358 | _ foo bar_ | _ foo bar_
+359 | a_"foo"_ | a_"foo"_
+360 | foo_bar_ | foo_bar_
+363 | aa_"bb"_cc | aa_"bb"_cc
+364 | foo-_(bar)_ | foo-<em>(bar)</em>
+
+# Rule 3
+365 | _foo* | _foo*
+366 | *foo bar * | *foo bar *
+368 | *(*foo) | *(*foo)
+369 | *(*foo*)* | <em>(<em>foo</em>)</em>
+370 | *foo*bar | <em>foo</em>bar
+
+# Rule 4
+371 | _foo bar _ | _foo bar _
+372 | _(_foo) | _(_foo)
+373 | _(_foo_)_ | <em>(<em>foo</em>)</em>
+374 | _foo_bar | _foo_bar
+377 | _(bar)_. | <em>(bar)</em>.
+
+# Rule 5
+378 | **foo bar** | <strong>foo bar</strong>
+379 | ** foo bar** | ** foo bar**
+380 | a**"foo"** | a**"foo"**
+381 | foo**bar** | foo<strong>bar</strong>
+
+# Rule 6
+382 | __foo bar__ | <strong>foo bar</strong>
+383 | __ foo bar__ | __ foo bar__
+385 | a__"foo"__ | a__"foo"__
+386 | foo__bar__ | foo__bar__
+389 | __foo, __bar__, baz__ | <strong>foo, <strong>bar</strong>, baz</strong>
+390 | foo-__(bar)__ | foo-<strong>(bar)</strong>
+
+# Rule 7
+391 | **foo bar ** | **foo bar **
+392 | **(**foo) | **(**foo)
+393 | *(**foo**)* | <em>(<strong>foo</strong>)</em>
+395 | **foo "*bar*" foo** | <strong>foo "<em>bar</em>" foo</strong>
+396 | **foo**bar | <strong>foo</strong>bar
+
+# Rule 8
+397 | __foo bar __ | __foo bar __
+398 | __(__foo) | __(__foo)
+399 | _(__foo__)_ | <em>(<strong>foo</strong>)</em>
+400 | __foo__bar | __foo__bar
+402 | __foo__bar__baz__ | <strong>foo__bar__baz</strong>
+403 | __(bar)__. | <strong>(bar)</strong>.
+
+# Rule 9
+406 | _foo __bar__ baz_ | <em>foo <strong>bar</strong> baz</em>
+407 | _foo _bar_ baz_ | <em>foo <em>bar</em> baz</em>
+408 | __foo_ bar_ | <em><em>foo</em> bar</em>
+409 | *foo *bar** | <em>foo <em>bar</em></em>
+410 | *foo **bar** baz* | <em>foo <strong>bar</strong> baz</em>
+411 | *foo**bar**baz* | <em>foo<strong>bar</strong>baz</em>
+412 | *foo**bar* | <em>foo**bar</em>
+413 | ***foo** bar* | <em><strong>foo</strong> bar</em>
+414 | *foo **bar*** | <em>foo <strong>bar</strong></em>
+415 | *foo**bar*** | <em>foo<strong>bar</strong></em>
+416 | foo***bar***baz | foo<em><strong>bar</strong></em>baz
+417 | foo******bar*********baz | foo<strong><strong><strong>bar</strong></strong></strong>***baz
+418 | *foo **bar *baz* bim** bop* | <em>foo <strong>bar <em>baz</em> bim</strong> bop</em>
+420 | ** is not an empty emphasis | ** is not an empty emphasis
+421 | **** is not an empty strong emphasis | **** is not an empty strong emphasis
+
+# Rule 10
+424 | __foo _bar_ baz__ | <strong>foo <em>bar</em> baz</strong>
+425 | __foo __bar__ baz__ | <strong>foo <strong>bar</strong> baz</strong>
+426 | ____foo__ bar__ | <strong><strong>foo</strong> bar</strong>
+427 | **foo **bar**** | <strong>foo <strong>bar</strong></strong>
+428 | **foo *bar* baz** | <strong>foo <em>bar</em> baz</strong>
+429 | **foo*bar*baz** | <strong>foo<em>bar</em>baz</strong>
+430 | ***foo* bar** | <strong><em>foo</em> bar</strong>
+431 | **foo *bar*** | <strong>foo <em>bar</em></strong>
+434 | __ is not an empty emphasis | __ is not an empty emphasis
+435 | ____ is not an empty strong emphasis | ____ is not an empty strong emphasis
+
+# Rule 11
+436 | foo *** | foo ***
+437 | foo *\** | foo <em>*</em>
+438 | foo *_* | foo <em>_</em>
+439 | foo ***** | foo *****
+440 | foo **\*** | foo <strong>*</strong>
+441 | foo **_** | foo <strong>_</strong>
+442 | **foo* | *<em>foo</em>
+443 | *foo** | <em>foo</em>*
+444 | ***foo** | *<strong>foo</strong>
+445 | ****foo* | ***<em>foo</em>
+446 | **foo*** | <strong>foo</strong>*
+447 | *foo**** | <em>foo</em>***
+
+# Rule 12
+448 | foo ___ | foo ___
+449 | foo _\__ | foo <em>_</em>
+450 | foo _*_ | foo <em>*</em>
+451 | foo _____ | foo _____
+452 | foo __\___ | foo <strong>_</strong>
+453 | foo __*__ | foo <strong>*</strong>
+454 | __foo_ | _<em>foo</em>
+455 | _foo__ | <em>foo</em>_
+456 | ___foo__ | _<strong>foo</strong>
+457 | ____foo_ | ___<em>foo</em>
+458 | __foo___ | <strong>foo</strong>_
+459 | _foo____ | <em>foo</em>___
+
+# Rule 13
+460 | **foo** | <strong>foo</strong>
+461 | *_foo_* | <em><em>foo</em></em>
+462 | __foo__ | <strong>foo</strong>
+463 | _*foo*_ | <em><em>foo</em></em>
+464 | ****foo**** | <strong><strong>foo</strong></strong>
+465 | ____foo____ | <strong><strong>foo</strong></strong>
+466 | ******foo****** | <strong><strong><strong>foo</strong></strong></strong>
+
+# Rule 14
+467 | ***foo*** | <em><strong>foo</strong></em>
+468 | _____foo_____ | <em><strong><strong>foo</strong></strong></em>
+
+# Rule 15
+469 | *foo _bar* baz_ | <em>foo _bar</em> baz_
+470 | *foo __bar *baz bim__ bam* | <em>foo <strong>bar *baz bim</strong> bam</em>
+
+# Rule 16
+471 | **foo **bar baz** | **foo <strong>bar baz</strong>
+472 | *foo *bar baz* | *foo <em>bar baz</em>
